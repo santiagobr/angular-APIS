@@ -9,6 +9,8 @@ import { UsersService } from './services/users/users.service';
 export class AppComponent {
   imgParent = '';
   showImg = true;
+  token = '';
+  email = '';
   /**
    *
    */
@@ -41,9 +43,13 @@ export class AppComponent {
 
   login() {
     this._authService.login('santiago@email.com', '1702').subscribe((rta) => {
-      console.log('====================================');
-      console.log(rta.access_token);
-      console.log('====================================');
+      this.token = rta.access_token;
+    });
+  }
+
+  getProfile() {
+    this._authService.profile(this.token).subscribe((profile) => {
+      this.email = profile.email;
     });
   }
 }
