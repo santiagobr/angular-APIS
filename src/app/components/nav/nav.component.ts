@@ -12,11 +12,10 @@ import { switchMap } from 'rxjs/operators';
 export class NavComponent implements OnInit {
   activeMenu = false;
   counter = 0;
-  token = '';
   profile: User | null = null;
   constructor(
     private storeService: StoreService,
-    private _authService: AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -30,23 +29,10 @@ export class NavComponent implements OnInit {
   }
 
   login() {
-    this._authService
-      .login('santiago@email.com', '1702')
-      .pipe(
-        switchMap((token) => {
-          this.token = token.access_token;
-
-          return this._authService.profile(token.access_token);
-        })
-      )
+    this.authService
+      .loginAndGet('santiago@email.com', '1702')
       .subscribe((user) => {
         this.profile = user;
       });
-  }
-
-  getProfile() {
-    this._authService.profile(this.token).subscribe((user) => {
-      this.profile = user;
-    });
   }
 }

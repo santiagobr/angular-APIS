@@ -40,16 +40,4 @@ export class AppComponent {
         console.log('====================================');
       });
   }
-
-  login() {
-    this._authService.login('santiago@email.com', '1702').subscribe((rta) => {
-      this.token = rta.access_token;
-    });
-  }
-
-  getProfile() {
-    this._authService.profile(this.token).subscribe((profile) => {
-      this.email = profile.email;
-    });
-  }
 }
