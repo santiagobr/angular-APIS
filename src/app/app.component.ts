@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { UsersService } from './services/users/users.service';
+import { FilesService } from './services/files.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,8 +16,8 @@ export class AppComponent {
    *
    */
   constructor(
-    private _authService: AuthService,
-    private _usersService: UsersService
+    private usersService: UsersService,
+    private filesService: FilesService
   ) {}
 
   onLoaded(img: string) {
@@ -28,7 +29,7 @@ export class AppComponent {
   }
 
   createUser() {
-    this._usersService
+    this.usersService
       .create({
         name: 'Santiago',
         email: 'santiago@email.com',
@@ -39,5 +40,15 @@ export class AppComponent {
         console.log(rta);
         console.log('====================================');
       });
+  }
+
+  downloadPdf() {
+    this.filesService
+      .getFile(
+        'my.pdf',
+        'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf',
+        'application/pdf'
+      )
+      .subscribe();
   }
 }
