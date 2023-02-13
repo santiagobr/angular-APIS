@@ -12,6 +12,7 @@ export class AppComponent {
   showImg = true;
   token = '';
   email = '';
+  imgRta = '';
   /**
    *
    */
@@ -50,5 +51,15 @@ export class AppComponent {
         'application/pdf'
       )
       .subscribe();
+  }
+
+  onUpload(event: Event) {
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.item(0);
+    if (file) {
+      this.filesService.uploadFile(file).subscribe((rta) => {
+        this.imgRta = rta.location;
+      });
+    }
   }
 }
